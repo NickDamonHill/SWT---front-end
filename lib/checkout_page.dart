@@ -16,6 +16,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   final _addressController = TextEditingController();
   final _cityController = TextEditingController();
   final _zipController = TextEditingController();
+  String _selectedPaymentMethod = '';
 
   @override
   void dispose() {
@@ -25,6 +26,45 @@ class _CheckoutPageState extends State<CheckoutPage> {
     _cityController.dispose();
     _zipController.dispose();
     super.dispose();
+  }
+
+  void _showPaymentConfirmation(BuildContext context, CartProvider cart) {
+    if (_selectedPaymentMethod.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Bitte wählen Sie eine Zahlungsmethode aus'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Bestellung erfolgreich'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Vielen Dank für Ihre Bestellung!'),
+            const SizedBox(height: 8),
+            Text('Zahlungsmethode: $_selectedPaymentMethod'),
+            const SizedBox(height: 8),
+            const Text('Sie erhalten in Kürze eine Bestätigung per E-Mail.'),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              cart.clear();
+              Navigator.of(context).popUntil((route) => route.isFirst);
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -163,6 +203,78 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   ),
                   const SizedBox(height: 32),
                   const Text(
+                    'Zahlungsmethode',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Card(
+                    child: Column(
+                      children: [
+                        RadioListTile<String>(
+                          title: Row(
+                            children: [
+                              Image.network(
+                                'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png',
+                                height: 24,
+                              ),
+                              const SizedBox(width: 8),
+                              const Text('Visa'),
+                            ],
+                          ),
+                          value: 'Visa',
+                          groupValue: _selectedPaymentMethod,
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedPaymentMethod = value!;
+                            });
+                          },
+                        ),
+                        RadioListTile<String>(
+                          title: Row(
+                            children: [
+                              Image.network(
+                                'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png',
+                                height: 24,
+                              ),
+                              const SizedBox(width: 8),
+                              const Text('Mastercard'),
+                            ],
+                          ),
+                          value: 'Mastercard',
+                          groupValue: _selectedPaymentMethod,
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedPaymentMethod = value!;
+                            });
+                          },
+                        ),
+                        RadioListTile<String>(
+                          title: Row(
+                            children: [
+                              Image.network(
+                                'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1280px-PayPal.svg.png',
+                                height: 24,
+                              ),
+                              const SizedBox(width: 8),
+                              const Text('PayPal'),
+                            ],
+                          ),
+                          value: 'PayPal',
+                          groupValue: _selectedPaymentMethod,
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedPaymentMethod = value!;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  const Text(
                     'Bestellübersicht',
                     style: TextStyle(
                       fontSize: 20,
@@ -226,25 +338,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          // TODO: Implement actual checkout process
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text('Bestellung erfolgreich'),
-                              content: const Text(
-                                'Vielen Dank für Ihre Bestellung! Sie erhalten in Kürze eine Bestätigung per E-Mail.',
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    cart.clear();
-                                    Navigator.of(context).popUntil((route) => route.isFirst);
-                                  },
-                                  child: const Text('OK'),
-                                ),
-                              ],
-                            ),
-                          );
+                          _showPaymentConfirmation(context, cart);
                         }
                       },
                       style: ElevatedButton.styleFrom(

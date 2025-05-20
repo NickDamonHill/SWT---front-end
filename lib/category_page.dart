@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'models/product.dart';
 import 'providers/favorites_provider.dart';
+import 'providers/cart_provider.dart';
+import 'cart_page.dart';
 
 class CategoryPage extends StatelessWidget {
   final String category;
@@ -20,6 +22,49 @@ class CategoryPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color(0xFFD4C4B5),
         title: Text(category),
+        actions: [
+          IconButton(
+            icon: Stack(
+              children: [
+                const Icon(Icons.shopping_cart),
+                Consumer<CartProvider>(
+                  builder: (context, cart, child) {
+                    if (cart.itemCount == 0) return const SizedBox.shrink();
+                    return Positioned(
+                      right: 0,
+                      top: 0,
+                      child: Container(
+                        padding: const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 16,
+                          minHeight: 16,
+                        ),
+                        child: Text(
+                          '${cart.itemCount}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CartPage()),
+              );
+            },
+          ),
+        ],
       ),
       body: GridView.builder(
         padding: const EdgeInsets.all(16),
@@ -98,19 +143,46 @@ class CategoryPage extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          IconButton(
-                            icon: Icon(
-                              isFavorite ? Icons.favorite : Icons.favorite_border,
-                              color: isFavorite ? Colors.red : null,
-                              size: 20,
-                            ),
-                            onPressed: () {
-                              if (!isFavorite) {
-                                _showAddToListDialog(context, product);
-                              } else {
-                                _showRemoveFromListsDialog(context, product);
-                              }
-                            },
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.shopping_cart_outlined),
+                                onPressed: () {
+                                  Provider.of<CartProvider>(context, listen: false)
+                                      .addItem(product);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('${product.name} wurde zum Warenkorb hinzugefügt'),
+                                      duration: const Duration(seconds: 2),
+                                      action: SnackBarAction(
+                                        label: 'Zum Warenkorb',
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => const CartPage()),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(
+                                  isFavorite ? Icons.favorite : Icons.favorite_border,
+                                  color: isFavorite ? Colors.red : null,
+                                  size: 20,
+                                ),
+                                onPressed: () {
+                                  if (!isFavorite) {
+                                    _showAddToListDialog(context, product);
+                                  } else {
+                                    _showRemoveFromListsDialog(context, product);
+                                  }
+                                },
+                              ),
+                            ],
                           ),
                         ],
                       ),

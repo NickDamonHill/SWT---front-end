@@ -4,7 +4,9 @@ import 'login.dart';
 import 'favorites_page.dart';
 import 'models/product.dart';
 import 'providers/favorites_provider.dart';
+import 'providers/cart_provider.dart';
 import 'category_page.dart';
+import 'cart_page.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key}) {
@@ -160,17 +162,52 @@ class HomePage extends StatelessWidget {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.shopping_cart),
+            icon: Stack(
+              children: [
+                const Icon(Icons.shopping_cart),
+                Consumer<CartProvider>(
+                  builder: (context, cart, child) {
+                    if (cart.itemCount == 0) return const SizedBox.shrink();
+                    return Positioned(
+                      right: 0,
+                      top: 0,
+                      child: Container(
+                        padding: const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 16,
+                          minHeight: 16,
+                        ),
+                        child: Text(
+                          '${cart.itemCount}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
             onPressed: () {
-              // Warenkorb-Logik hier implementieren
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CartPage()),
+              );
             },
           ),
           IconButton(
             icon: const Icon(Icons.person_outline),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginPage()),
+              showDialog(
+                context: context,
+                builder: (context) => const LoginDialog(),
               );
             },
           ),
@@ -402,19 +439,46 @@ class HomePage extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          IconButton(
-                            icon: Icon(
-                              isFavorite ? Icons.favorite : Icons.favorite_border,
-                              color: isFavorite ? Colors.red : null,
-                              size: 20,
-                            ),
-                            onPressed: () {
-                              if (!isFavorite) {
-                                _showAddToListDialog(context, product);
-                              } else {
-                                _showRemoveFromListsDialog(context, product);
-                              }
-                            },
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.shopping_cart_outlined),
+                                onPressed: () {
+                                  Provider.of<CartProvider>(context, listen: false)
+                                      .addItem(product);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('${product.name} wurde zum Warenkorb hinzugefügt'),
+                                      duration: const Duration(seconds: 2),
+                                      action: SnackBarAction(
+                                        label: 'Zum Warenkorb',
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => const CartPage()),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(
+                                  isFavorite ? Icons.favorite : Icons.favorite_border,
+                                  color: isFavorite ? Colors.red : null,
+                                  size: 20,
+                                ),
+                                onPressed: () {
+                                  if (!isFavorite) {
+                                    _showAddToListDialog(context, product);
+                                  } else {
+                                    _showRemoveFromListsDialog(context, product);
+                                  }
+                                },
+                              ),
+                            ],
                           ),
                         ],
                       ),

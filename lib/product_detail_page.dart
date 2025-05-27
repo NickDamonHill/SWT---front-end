@@ -4,6 +4,7 @@ import 'models/product.dart';
 import 'providers/favorites_provider.dart';
 import 'providers/cart_provider.dart';
 import 'cart_page.dart';
+import 'providers/language_provider.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final Product product;
@@ -15,11 +16,18 @@ class ProductDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = context.watch<LanguageProvider>();
+    final isEnglish = languageProvider.isEnglish;
+    final productName = isEnglish ? product.nameEn : product.name;
+    final productDescription = isEnglish ? product.descriptionEn : product.description;
+    final categoryKey = product.category.toLowerCase().replaceAll(' ', '_');
+    final categoryName = languageProvider.translate(categoryKey);
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5DC),
       appBar: AppBar(
         backgroundColor: const Color(0xFFD4C4B5),
-        title: Text(product.name),
+        title: Text(productName),
         actions: [
           IconButton(
             icon: Stack(
@@ -92,7 +100,7 @@ class ProductDetailPage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          product.name,
+                          productName,
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -119,7 +127,7 @@ class ProductDetailPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
-                      product.category,
+                      categoryName,
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -129,16 +137,16 @@ class ProductDetailPage extends StatelessWidget {
                   const SizedBox(height: 24),
 
                   // Description
-                  const Text(
-                    'Beschreibung',
-                    style: TextStyle(
+                  Text(
+                    languageProvider.translate('description'),
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    product.description,
+                    productDescription,
                     style: const TextStyle(
                       fontSize: 16,
                       height: 1.5,
@@ -147,9 +155,9 @@ class ProductDetailPage extends StatelessWidget {
                   const SizedBox(height: 24),
 
                   // Seller Information
-                  const Text(
-                    'Verkäufer',
-                    style: TextStyle(
+                  Text(
+                    languageProvider.translate('seller'),
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
@@ -193,7 +201,7 @@ class ProductDetailPage extends StatelessWidget {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                'Seit ${DateTime.now().year - 2020} auf unserer Plattform',
+                                languageProvider.translate('seller_since').replaceAll('{years}', '${DateTime.now().year - 2020}'),
                                 style: const TextStyle(
                                   color: Colors.grey,
                                 ),
@@ -226,7 +234,9 @@ class ProductDetailPage extends StatelessWidget {
                                 color: isFavorite ? Colors.red : null,
                               ),
                               label: Text(
-                                isFavorite ? 'Aus Favoriten entfernen' : 'Zu Favoriten hinzufügen',
+                                isFavorite 
+                                  ? languageProvider.translate('remove_from_favorites')
+                                  : languageProvider.translate('add_to_favorites'),
                               ),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.white,
@@ -245,10 +255,10 @@ class ProductDetailPage extends StatelessWidget {
                                 .addItem(product);
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text('${product.name} wurde zum Warenkorb hinzugefügt'),
+                                content: Text(languageProvider.translate('added_to_cart').replaceAll('{product}', product.name)),
                                 duration: const Duration(seconds: 2),
                                 action: SnackBarAction(
-                                  label: 'Zum Warenkorb',
+                                  label: languageProvider.translate('go_to_cart'),
                                   onPressed: () {
                                     Navigator.push(
                                       context,
@@ -260,7 +270,7 @@ class ProductDetailPage extends StatelessWidget {
                             );
                           },
                           icon: const Icon(Icons.shopping_cart_outlined),
-                          label: const Text('In den Warenkorb'),
+                          label: Text(languageProvider.translate('add_to_cart')),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF8B7355),
                             foregroundColor: Colors.white,
@@ -280,11 +290,12 @@ class ProductDetailPage extends StatelessWidget {
   }
 
   void _showAddToListDialog(BuildContext context, Product product) {
+    final languageProvider = context.read<LanguageProvider>();
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Zu Liste hinzufügen'),
+          title: Text(languageProvider.translate('add_to_list')),
           content: SizedBox(
             width: double.maxFinite,
             child: Consumer<FavoritesProvider>(
@@ -313,7 +324,7 @@ class ProductDetailPage extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Schließen'),
+              child: Text(languageProvider.translate('close')),
             ),
           ],
         );
@@ -322,11 +333,12 @@ class ProductDetailPage extends StatelessWidget {
   }
 
   void _showRemoveFromListsDialog(BuildContext context, Product product) {
+    final languageProvider = context.read<LanguageProvider>();
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Aus Listen entfernen'),
+          title: Text(languageProvider.translate('remove_from_lists')),
           content: SizedBox(
             width: double.maxFinite,
             child: Consumer<FavoritesProvider>(
@@ -336,7 +348,7 @@ class ProductDetailPage extends StatelessWidget {
                     .toList();
 
                 if (listsWithProduct.isEmpty) {
-                  return const Text('Dieses Produkt ist in keiner Liste');
+                  return Text(languageProvider.translate('product_in_no_list'));
                 }
 
                 return ListView.builder(
@@ -365,7 +377,7 @@ class ProductDetailPage extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Schließen'),
+              child: Text(languageProvider.translate('close')),
             ),
           ],
         );

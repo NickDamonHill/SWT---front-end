@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'home_page.dart';
 import 'providers/favorites_provider.dart';
 import 'providers/cart_provider.dart';
+import 'providers/language_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => FavoritesProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => LanguageProvider()),
       ],
       child: MaterialApp(
         title: 'SWT Frontend',

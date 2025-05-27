@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'register.dart';
+import 'package:provider/provider.dart';
+import 'providers/language_provider.dart';
 
 class LoginDialog extends StatefulWidget {
   const LoginDialog({super.key});
@@ -14,6 +16,11 @@ class _LoginDialogState extends State<LoginDialog> {
   final _passwordController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
@@ -22,6 +29,7 @@ class _LoginDialogState extends State<LoginDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context, listen: false);
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -43,7 +51,7 @@ class _LoginDialogState extends State<LoginDialog> {
               TextFormField(
                 controller: _usernameController,
                 decoration: InputDecoration(
-                  labelText: 'Benutzername',
+                  labelText: languageProvider.translate('username'),
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
@@ -54,7 +62,7 @@ class _LoginDialogState extends State<LoginDialog> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Bitte geben Sie einen Benutzernamen ein';
+                    return languageProvider.translate('enter_username');
                   }
                   return null;
                 },
@@ -64,7 +72,7 @@ class _LoginDialogState extends State<LoginDialog> {
                 controller: _passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
-                  labelText: 'Passwort',
+                  labelText: languageProvider.translate('password'),
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
@@ -75,7 +83,7 @@ class _LoginDialogState extends State<LoginDialog> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Bitte geben Sie ein Passwort ein';
+                    return languageProvider.translate('enter_password');
                   }
                   return null;
                 },
@@ -85,9 +93,9 @@ class _LoginDialogState extends State<LoginDialog> {
                 onPressed: () {
                   // Hier Passwort vergessen Logik implementieren
                 },
-                child: const Text(
-                  'Passwort vergessen?',
-                  style: TextStyle(
+                child: Text(
+                  languageProvider.translate('forgot_password'),
+                  style: const TextStyle(
                     color: Color(0xFF8B7355),
                   ),
                 ),
@@ -109,9 +117,9 @@ class _LoginDialogState extends State<LoginDialog> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text(
-                  'Anmelden',
-                  style: TextStyle(
+                child: Text(
+                  languageProvider.translate('login'),
+                  style: const TextStyle(
                     fontSize: 18,
                     color: Colors.white,
                   ),
@@ -121,7 +129,7 @@ class _LoginDialogState extends State<LoginDialog> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Noch kein Konto?'),
+                  Text(languageProvider.translate('no_account')),
                   TextButton(
                     onPressed: () {
                       Navigator.pop(context);
@@ -130,9 +138,9 @@ class _LoginDialogState extends State<LoginDialog> {
                         builder: (context) => const RegisterDialog(),
                       );
                     },
-                    child: const Text(
-                      'Registrieren',
-                      style: TextStyle(
+                    child: Text(
+                      languageProvider.translate('register'),
+                      style: const TextStyle(
                         color: Color(0xFF8B7355),
                         fontWeight: FontWeight.bold,
                       ),

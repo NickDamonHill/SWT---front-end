@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/cart_provider.dart';
+import 'providers/language_provider.dart';
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({super.key});
@@ -30,28 +31,30 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   void _showPaymentConfirmation(BuildContext context, CartProvider cart) {
     if (_selectedPaymentMethod.isEmpty) {
+      final languageProvider = context.read<LanguageProvider>();
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Bitte wählen Sie eine Zahlungsmethode aus'),
+        SnackBar(
+          content: Text(languageProvider.translate('select_payment_method')),
           backgroundColor: Colors.red,
         ),
       );
       return;
     }
 
+    final languageProvider = context.read<LanguageProvider>();
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Bestellung erfolgreich'),
+        title: Text(languageProvider.translate('order_successful')),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Vielen Dank für Ihre Bestellung!'),
+            Text(languageProvider.translate('order_successful_message')),
             const SizedBox(height: 8),
-            Text('Zahlungsmethode: $_selectedPaymentMethod'),
+            Text('${languageProvider.translate('payment_method_label')} $_selectedPaymentMethod'),
             const SizedBox(height: 8),
-            const Text('Sie erhalten in Kürze eine Bestätigung per E-Mail.'),
+            Text(languageProvider.translate('email_confirmation')),
           ],
         ),
         actions: [
@@ -60,7 +63,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               cart.clear();
               Navigator.of(context).popUntil((route) => route.isFirst);
             },
-            child: const Text('OK'),
+            child: Text(languageProvider.translate('ok')),
           ),
         ],
       ),
@@ -69,19 +72,20 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = context.watch<LanguageProvider>();
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5DC),
       appBar: AppBar(
         backgroundColor: const Color(0xFFD4C4B5),
-        title: const Text('Zur Kasse'),
+        title: Text(languageProvider.translate('checkout_title')),
       ),
       body: Consumer<CartProvider>(
         builder: (context, cart, child) {
           if (cart.items.isEmpty) {
-            return const Center(
+            return Center(
               child: Text(
-                'Ihr Warenkorb ist leer',
-                style: TextStyle(fontSize: 18),
+                languageProvider.translate('cart_empty'),
+                style: const TextStyle(fontSize: 18),
               ),
             );
           }
@@ -93,9 +97,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Lieferadresse',
-                    style: TextStyle(
+                  Text(
+                    languageProvider.translate('shipping_address_title'),
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -104,7 +108,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   TextFormField(
                     controller: _nameController,
                     decoration: InputDecoration(
-                      labelText: 'Name',
+                      labelText: languageProvider.translate('name'),
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
@@ -113,7 +117,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Bitte geben Sie Ihren Namen ein';
+                        return languageProvider.translate('name_required');
                       }
                       return null;
                     },
@@ -122,7 +126,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   TextFormField(
                     controller: _emailController,
                     decoration: InputDecoration(
-                      labelText: 'E-Mail',
+                      labelText: languageProvider.translate('email'),
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
@@ -131,10 +135,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Bitte geben Sie Ihre E-Mail-Adresse ein';
+                        return languageProvider.translate('email_required');
                       }
                       if (!value.contains('@')) {
-                        return 'Bitte geben Sie eine gültige E-Mail-Adresse ein';
+                        return languageProvider.translate('email_invalid');
                       }
                       return null;
                     },
@@ -143,7 +147,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   TextFormField(
                     controller: _addressController,
                     decoration: InputDecoration(
-                      labelText: 'Adresse',
+                      labelText: languageProvider.translate('address'),
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
@@ -152,7 +156,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Bitte geben Sie Ihre Adresse ein';
+                        return languageProvider.translate('address_required');
                       }
                       return null;
                     },
@@ -164,7 +168,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         child: TextFormField(
                           controller: _cityController,
                           decoration: InputDecoration(
-                            labelText: 'Stadt',
+                            labelText: languageProvider.translate('city'),
                             filled: true,
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
@@ -173,7 +177,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Bitte geben Sie Ihre Stadt ein';
+                              return languageProvider.translate('city_required');
                             }
                             return null;
                           },
@@ -184,7 +188,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         child: TextFormField(
                           controller: _zipController,
                           decoration: InputDecoration(
-                            labelText: 'PLZ',
+                            labelText: languageProvider.translate('zip'),
                             filled: true,
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
@@ -193,7 +197,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Bitte geben Sie Ihre PLZ ein';
+                              return languageProvider.translate('zip_required');
                             }
                             return null;
                           },
@@ -202,9 +206,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     ],
                   ),
                   const SizedBox(height: 32),
-                  const Text(
-                    'Zahlungsmethode',
-                    style: TextStyle(
+                  Text(
+                    languageProvider.translate('payment_method_title'),
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -221,7 +225,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 height: 24,
                               ),
                               const SizedBox(width: 8),
-                              const Text('Visa'),
+                              Text(languageProvider.translate('visa')),
                             ],
                           ),
                           value: 'Visa',
@@ -240,7 +244,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 height: 24,
                               ),
                               const SizedBox(width: 8),
-                              const Text('Mastercard'),
+                              Text(languageProvider.translate('mastercard')),
                             ],
                           ),
                           value: 'Mastercard',
@@ -259,7 +263,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 height: 24,
                               ),
                               const SizedBox(width: 8),
-                              const Text('PayPal'),
+                              Text(languageProvider.translate('paypal')),
                             ],
                           ),
                           value: 'PayPal',
@@ -274,9 +278,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     ),
                   ),
                   const SizedBox(height: 32),
-                  const Text(
-                    'Bestellübersicht',
-                    style: TextStyle(
+                  Text(
+                    languageProvider.translate('order_summary_title'),
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -294,7 +298,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        '${item.product.name} (${item.quantity}x)',
+                                        '${languageProvider.isEnglish ? item.product.nameEn : item.product.name} (${item.quantity}x)',
                                         style: const TextStyle(fontSize: 16),
                                       ),
                                     ),
@@ -312,9 +316,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                'Gesamt',
-                                style: TextStyle(
+                              Text(
+                                languageProvider.translate('total_label'),
+                                style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -348,9 +352,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: const Text(
-                        'Bestellung abschließen',
-                        style: TextStyle(
+                      child: Text(
+                        languageProvider.translate('complete_order'),
+                        style: const TextStyle(
                           fontSize: 18,
                           color: Colors.white,
                         ),

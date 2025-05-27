@@ -5,6 +5,7 @@ import 'favorites_page.dart';
 import 'models/product.dart';
 import 'providers/favorites_provider.dart';
 import 'providers/cart_provider.dart';
+import 'providers/language_provider.dart';
 import 'category_page.dart';
 import 'cart_page.dart';
 import 'product_detail_page.dart';
@@ -32,112 +33,140 @@ class _HomePageState extends State<HomePage> {
         Product(
           id: 'jewelry_1',
           name: 'Handgefertigte Halskette',
+          nameEn: 'Handmade Necklace',
           price: 49.99,
           category: 'Schmuck',
           description: 'Elegante Halskette aus hochwertigen Materialien, handgefertigt mit Liebe zum Detail.',
+          descriptionEn: 'Elegant necklace made from high-quality materials, handcrafted with attention to detail.',
         ),
         Product(
           id: 'jewelry_2',
           name: 'Vintage Ohrringe',
+          nameEn: 'Vintage Earrings',
           price: 29.99,
           category: 'Schmuck',
           description: 'Klassische Ohrringe im Vintage-Stil, perfekt für jeden Anlass.',
+          descriptionEn: 'Classic vintage-style earrings, perfect for any occasion.',
         ),
       ],
       'Kleidung': [
         Product(
           id: 'clothing_1',
           name: 'Handgestrickter Pullover',
+          nameEn: 'Hand-knitted Sweater',
           price: 89.99,
           category: 'Kleidung',
           description: 'Warm und gemütlich, handgestrickt aus 100% natürlicher Wolle.',
+          descriptionEn: 'Warm and cozy, hand-knitted from 100% natural wool.',
         ),
         Product(
           id: 'clothing_2',
           name: 'Gehäkelte Mütze',
+          nameEn: 'Crocheted Hat',
           price: 24.99,
           category: 'Kleidung',
           description: 'Stylische Mütze, handgehäkelt mit hochwertigem Garn.',
+          descriptionEn: 'Stylish hat, hand-crocheted with high-quality yarn.',
         ),
       ],
       'Wohnen': [
         Product(
           id: 'home_1',
           name: 'Makramee Wandbehang',
+          nameEn: 'Macrame Wall Hanging',
           price: 59.99,
           category: 'Wohnen',
           description: 'Handgeknüpfter Wandbehang aus natürlichen Materialien, einzigartiges Design.',
+          descriptionEn: 'Hand-knotted wall hanging made from natural materials, unique design.',
         ),
         Product(
           id: 'home_2',
           name: 'Handgetöpferte Vase',
+          nameEn: 'Handmade Pottery Vase',
           price: 39.99,
           category: 'Wohnen',
           description: 'Einzigartige Vase aus Keramik, handgetöpfert und glasiert.',
+          descriptionEn: 'Unique ceramic vase, handmade and glazed.',
         ),
       ],
       'Kunst': [
         Product(
           id: 'art_1',
           name: 'Aquarell Gemälde',
+          nameEn: 'Watercolor Painting',
           price: 149.99,
           category: 'Kunst',
           description: 'Original Aquarell-Gemälde, handgemalt auf hochwertigem Papier.',
+          descriptionEn: 'Original watercolor painting, hand-painted on high-quality paper.',
         ),
         Product(
           id: 'art_2',
           name: 'Handgedruckte Grafik',
+          nameEn: 'Hand-printed Graphic',
           price: 79.99,
           category: 'Kunst',
           description: 'Limitierte Auflage, handgedruckt mit traditionellen Techniken.',
+          descriptionEn: 'Limited edition, hand-printed with traditional techniques.',
         ),
       ],
       'Geschenke': [
         Product(
           id: 'gift_1',
           name: 'Personalisiertes Fotoalbum',
+          nameEn: 'Personalized Photo Album',
           price: 34.99,
           category: 'Geschenke',
           description: 'Handgefertigtes Fotoalbum, personalisierbar mit Namen und Datum.',
+          descriptionEn: 'Handmade photo album, customizable with name and date.',
         ),
         Product(
           id: 'gift_2',
           name: 'Handgemachte Seife Set',
+          nameEn: 'Handmade Soap Set',
           price: 19.99,
           category: 'Geschenke',
           description: 'Set aus 3 handgemachten Seifen mit natürlichen Zutaten.',
+          descriptionEn: 'Set of 3 handmade soaps with natural ingredients.',
         ),
       ],
       'Hochzeit': [
         Product(
           id: 'wedding_1',
           name: 'Handgefertigte Einladungen',
+          nameEn: 'Handmade Invitations',
           price: 3.99,
           category: 'Hochzeit',
           description: 'Elegante Hochzeitseinladungen, handgefertigt mit Liebe zum Detail.',
+          descriptionEn: 'Elegant wedding invitations, handmade with attention to detail.',
         ),
         Product(
           id: 'wedding_2',
           name: 'Blumenkranz',
+          nameEn: 'Flower Crown',
           price: 44.99,
           category: 'Hochzeit',
           description: 'Traditioneller Blumenkranz, handgefertigt aus frischen Blumen.',
+          descriptionEn: 'Traditional flower crown, handmade from fresh flowers.',
         ),
       ],
       'Spielzeug': [
         Product(
           id: 'toy_1',
           name: 'Gehäkeltes Kuscheltier',
+          nameEn: 'Crocheted Plush Toy',
           price: 29.99,
           category: 'Spielzeug',
           description: 'Süßes Kuscheltier, handgehäkelt aus weicher Wolle.',
+          descriptionEn: 'Cute plush toy, hand-crocheted from soft wool.',
         ),
         Product(
           id: 'toy_2',
           name: 'Holzspielzeug Set',
+          nameEn: 'Wooden Toy Set',
           price: 39.99,
           category: 'Spielzeug',
           description: 'Set aus handgefertigtem Holzspielzeug, sicher und langlebig.',
+          descriptionEn: 'Set of handmade wooden toys, safe and durable.',
         ),
       ],
     };
@@ -173,6 +202,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = context.watch<LanguageProvider>();
+    
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5DC),
       appBar: AppBar(
@@ -183,7 +214,7 @@ class _HomePageState extends State<HomePage> {
           child: TextField(
             controller: _searchController,
             decoration: InputDecoration(
-              hintText: 'Suchen...',
+              hintText: languageProvider.translate('search'),
               filled: true,
               fillColor: Colors.white,
               border: OutlineInputBorder(
@@ -206,6 +237,12 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.language),
+            onPressed: () {
+              languageProvider.toggleLanguage();
+            },
+          ),
           Consumer<FavoritesProvider>(
             builder: (context, favoritesProvider, child) {
               final hasAnyFavorites = favoritesProvider.lists
@@ -287,7 +324,7 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Suchergebnisse (${_searchResults.length})',
+                      '${languageProvider.translate('search_results')} (${_searchResults.length})',
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -295,10 +332,10 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const SizedBox(height: 16),
                     if (_searchResults.isEmpty)
-                      const Center(
+                      Center(
                         child: Text(
-                          'Keine Produkte gefunden',
-                          style: TextStyle(fontSize: 16),
+                          languageProvider.translate('no_products_found'),
+                          style: const TextStyle(fontSize: 16),
                         ),
                       )
                     else
@@ -336,9 +373,9 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Beliebte Kategorien',
-                      style: TextStyle(
+                    Text(
+                      languageProvider.translate('popular_categories'),
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
@@ -363,9 +400,9 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Empfohlen für dich',
-                      style: TextStyle(
+                    Text(
+                      languageProvider.translate('recommended'),
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
@@ -396,10 +433,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildCategoryChip(String label, BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context, listen: false);
+    final categoryKey = label.toLowerCase().replaceAll(' ', '_');
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: ActionChip(
-        label: Text(label),
+        label: Text(languageProvider.translate(categoryKey)),
         backgroundColor: Colors.white,
         labelStyle: const TextStyle(color: Color(0xFF8B7355)),
         onPressed: () {
@@ -418,6 +457,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildFeaturedCategory(String title, BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context, listen: false);
+    final categoryKey = title.toLowerCase().replaceAll(' ', '_');
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -466,7 +507,7 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.all(8),
                   color: Colors.black54,
                   child: Text(
-                    title,
+                    languageProvider.translate(categoryKey),
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -483,6 +524,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildProductCard(Product product) {
+    final languageProvider = Provider.of<LanguageProvider>(context, listen: false);
+    final isEnglish = languageProvider.isEnglish;
+    final productName = isEnglish ? product.nameEn : product.name;
+    final productDescription = isEnglish ? product.descriptionEn : product.description;
+    
     return Consumer<FavoritesProvider>(
       builder: (context, favoritesProvider, child) {
         final isFavorite = favoritesProvider.isFavorite(product);
@@ -539,7 +585,7 @@ class _HomePageState extends State<HomePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              product.name,
+                              productName,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -549,7 +595,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              product.description,
+                              productDescription,
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey,
@@ -578,10 +624,10 @@ class _HomePageState extends State<HomePage> {
                                         .addItem(product);
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
-                                        content: Text('${product.name} wurde zum Warenkorb hinzugefügt'),
+                                        content: Text('${productName} ${languageProvider.translate('added_to_cart')}'),
                                         duration: const Duration(seconds: 2),
                                         action: SnackBarAction(
-                                          label: 'Zum Warenkorb',
+                                          label: languageProvider.translate('go_to_cart'),
                                           onPressed: () {
                                             Navigator.push(
                                               context,
@@ -624,12 +670,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _showAddToListDialog(BuildContext context, Product product) {
+    final languageProvider = context.read<LanguageProvider>();
     showDialog(
       context: context,
       builder: (context) {
         final provider = context.read<FavoritesProvider>();
         return AlertDialog(
-          title: const Text('Zu Liste hinzufügen'),
+          title: Text(languageProvider.translate('add_to_list')),
           content: SizedBox(
             width: double.maxFinite,
             child: Consumer<FavoritesProvider>(
@@ -658,7 +705,7 @@ class _HomePageState extends State<HomePage> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Schließen'),
+              child: Text(languageProvider.translate('close')),
             ),
           ],
         );
@@ -667,12 +714,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _showRemoveFromListsDialog(BuildContext context, Product product) {
+    final languageProvider = context.read<LanguageProvider>();
     showDialog(
       context: context,
       builder: (context) {
         final provider = context.read<FavoritesProvider>();
         return AlertDialog(
-          title: const Text('Aus Listen entfernen'),
+          title: Text(languageProvider.translate('remove_from_lists')),
           content: SizedBox(
             width: double.maxFinite,
             child: Consumer<FavoritesProvider>(
@@ -682,7 +730,7 @@ class _HomePageState extends State<HomePage> {
                     .toList();
 
                 if (listsWithProduct.isEmpty) {
-                  return const Text('Dieses Produkt ist in keiner Liste');
+                  return Text(languageProvider.translate('product_in_no_list'));
                 }
 
                 return ListView.builder(
@@ -711,7 +759,7 @@ class _HomePageState extends State<HomePage> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Schließen'),
+              child: Text(languageProvider.translate('close')),
             ),
           ],
         );

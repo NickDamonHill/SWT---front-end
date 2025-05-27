@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'login.dart';
+import 'package:provider/provider.dart';
+import 'providers/language_provider.dart';
 
 class RegisterDialog extends StatefulWidget {
   const RegisterDialog({super.key});
@@ -26,6 +28,7 @@ class _RegisterDialogState extends State<RegisterDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context, listen: false);
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -47,7 +50,7 @@ class _RegisterDialogState extends State<RegisterDialog> {
               TextFormField(
                 controller: _usernameController,
                 decoration: InputDecoration(
-                  labelText: 'Benutzername',
+                  labelText: languageProvider.translate('username'),
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
@@ -58,7 +61,7 @@ class _RegisterDialogState extends State<RegisterDialog> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Bitte geben Sie einen Benutzernamen ein';
+                    return languageProvider.translate('enter_username');
                   }
                   return null;
                 },
@@ -67,7 +70,7 @@ class _RegisterDialogState extends State<RegisterDialog> {
               TextFormField(
                 controller: _emailController,
                 decoration: InputDecoration(
-                  labelText: 'E-Mail',
+                  labelText: languageProvider.translate('email'),
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
@@ -78,10 +81,10 @@ class _RegisterDialogState extends State<RegisterDialog> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Bitte geben Sie eine E-Mail-Adresse ein';
+                    return languageProvider.translate('enter_email');
                   }
                   if (!value.contains('@')) {
-                    return 'Bitte geben Sie eine gültige E-Mail-Adresse ein';
+                    return languageProvider.translate('enter_valid_email');
                   }
                   return null;
                 },
@@ -91,7 +94,7 @@ class _RegisterDialogState extends State<RegisterDialog> {
                 controller: _passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
-                  labelText: 'Passwort',
+                  labelText: languageProvider.translate('password'),
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
@@ -102,10 +105,10 @@ class _RegisterDialogState extends State<RegisterDialog> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Bitte geben Sie ein Passwort ein';
+                    return languageProvider.translate('enter_password');
                   }
                   if (value.length < 6) {
-                    return 'Das Passwort muss mindestens 6 Zeichen lang sein';
+                    return languageProvider.translate('password_min_length');
                   }
                   return null;
                 },
@@ -115,7 +118,7 @@ class _RegisterDialogState extends State<RegisterDialog> {
                 controller: _confirmPasswordController,
                 obscureText: true,
                 decoration: InputDecoration(
-                  labelText: 'Passwort bestätigen',
+                  labelText: languageProvider.translate('confirm_password'),
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
@@ -126,10 +129,10 @@ class _RegisterDialogState extends State<RegisterDialog> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Bitte bestätigen Sie Ihr Passwort';
+                    return languageProvider.translate('confirm_password');
                   }
                   if (value != _passwordController.text) {
-                    return 'Die Passwörter stimmen nicht überein';
+                    return languageProvider.translate('passwords_do_not_match');
                   }
                   return null;
                 },
@@ -152,9 +155,9 @@ class _RegisterDialogState extends State<RegisterDialog> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text(
-                  'Registrieren',
-                  style: TextStyle(
+                child: Text(
+                  languageProvider.translate('register'),
+                  style: const TextStyle(
                     fontSize: 18,
                     color: Colors.white,
                   ),
@@ -164,7 +167,7 @@ class _RegisterDialogState extends State<RegisterDialog> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Bereits ein Konto?'),
+                  Text(languageProvider.translate('already_account')),
                   TextButton(
                     onPressed: () {
                       Navigator.pop(context);
@@ -173,9 +176,9 @@ class _RegisterDialogState extends State<RegisterDialog> {
                         builder: (context) => const LoginDialog(),
                       );
                     },
-                    child: const Text(
-                      'Anmelden',
-                      style: TextStyle(
+                    child: Text(
+                      languageProvider.translate('login'),
+                      style: const TextStyle(
                         color: Color(0xFF8B7355),
                         fontWeight: FontWeight.bold,
                       ),

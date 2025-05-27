@@ -1,10 +1,11 @@
 import 'package:flutter/foundation.dart';
 import '../models/product.dart';
 import '../models/favorite_list.dart';
+import 'language_provider.dart';
 
 class FavoritesProvider extends ChangeNotifier {
   final List<FavoriteList> _lists = [
-    FavoriteList(id: 'default', name: 'Meine Favoriten')
+    FavoriteList(id: 'default', name: 'my_favorites')
   ];
   
   List<FavoriteList> get lists => List.unmodifiable(_lists);

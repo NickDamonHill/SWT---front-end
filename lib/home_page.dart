@@ -8,8 +8,23 @@ import 'providers/cart_provider.dart';
 import 'category_page.dart';
 import 'cart_page.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key}) {
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  late final Map<String, List<Product>> _sampleProducts;
+  late final List<Product> _allProducts;
+  final TextEditingController _searchController = TextEditingController();
+  List<Product> _searchResults = [];
+  bool _isSearching = false;
+
+  @override
+  void initState() {
+    super.initState();
     // Sample products for each category
     _sampleProducts = {
       'Schmuck': [
@@ -116,8 +131,30 @@ class HomePage extends StatelessWidget {
     _allProducts = _sampleProducts.values.expand((products) => products).toList();
   }
 
-  late final Map<String, List<Product>> _sampleProducts;
-  late final List<Product> _allProducts;
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _performSearch(String query) {
+    if (query.isEmpty) {
+      setState(() {
+        _isSearching = false;
+        _searchResults = [];
+      });
+      return;
+    }
+
+    final lowercaseQuery = query.toLowerCase();
+    setState(() {
+      _isSearching = true;
+      _searchResults = _allProducts.where((product) {
+        return product.name.toLowerCase().contains(lowercaseQuery) ||
+            product.category.toLowerCase().contains(lowercaseQuery);
+      }).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,6 +166,7 @@ class HomePage extends StatelessWidget {
         title: SizedBox(
           height: 40,
           child: TextField(
+            controller: _searchController,
             decoration: InputDecoration(
               hintText: 'Suchen...',
               filled: true,
@@ -138,8 +176,18 @@ class HomePage extends StatelessWidget {
                 borderSide: BorderSide.none,
               ),
               prefixIcon: const Icon(Icons.search),
+              suffixIcon: _isSearching
+                  ? IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: () {
+                        _searchController.clear();
+                        _performSearch('');
+                      },
+                    )
+                  : null,
               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
             ),
+            onChanged: _performSearch,
           ),
         ),
         actions: [
@@ -217,74 +265,115 @@ class HomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: 50,
-              color: const Color(0xFFE6D5C3),
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                children: _sampleProducts.keys.map((category) {
-                  return _buildCategoryChip(category, context);
-                }).toList(),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Beliebte Kategorien',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+            if (_isSearching) ...[
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Suchergebnisse (${_searchResults.length})',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  GridView.count(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 16,
-                    crossAxisSpacing: 16,
-                    childAspectRatio: 1.5,
-                    children: _sampleProducts.keys.take(4).map((category) {
-                      return _buildFeaturedCategory(category, context);
-                    }).toList(),
-                  ),
-                ],
+                    const SizedBox(height: 16),
+                    if (_searchResults.isEmpty)
+                      const Center(
+                        child: Text(
+                          'Keine Produkte gefunden',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      )
+                    else
+                      GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.7,
+                          mainAxisSpacing: 16,
+                          crossAxisSpacing: 16,
+                        ),
+                        itemCount: _searchResults.length,
+                        itemBuilder: (context, index) {
+                          return _buildProductCard(_searchResults[index]);
+                        },
+                      ),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Empfohlen für dich',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+            ] else ...[
+              Container(
+                height: 50,
+                color: const Color(0xFFE6D5C3),
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  children: _sampleProducts.keys.map((category) {
+                    return _buildCategoryChip(category, context);
+                  }).toList(),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Beliebte Kategorien',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    const SizedBox(height: 16),
+                    GridView.count(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
                       crossAxisCount: 2,
-                      childAspectRatio: 0.7,
                       mainAxisSpacing: 16,
                       crossAxisSpacing: 16,
+                      childAspectRatio: 1.5,
+                      children: _sampleProducts.keys.take(4).map((category) {
+                        return _buildFeaturedCategory(category, context);
+                      }).toList(),
                     ),
-                    itemCount: _allProducts.length,
-                    itemBuilder: (context, index) {
-                      return _buildProductCard(_allProducts[index]);
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Empfohlen für dich',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.7,
+                        mainAxisSpacing: 16,
+                        crossAxisSpacing: 16,
+                      ),
+                      itemCount: _allProducts.length,
+                      itemBuilder: (context, index) {
+                        return _buildProductCard(_allProducts[index]);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ],
         ),
       ),

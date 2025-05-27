@@ -7,6 +7,7 @@ import 'providers/favorites_provider.dart';
 import 'providers/cart_provider.dart';
 import 'category_page.dart';
 import 'cart_page.dart';
+import 'product_detail_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -33,12 +34,14 @@ class _HomePageState extends State<HomePage> {
           name: 'Handgefertigte Halskette',
           price: 49.99,
           category: 'Schmuck',
+          description: 'Elegante Halskette aus hochwertigen Materialien, handgefertigt mit Liebe zum Detail.',
         ),
         Product(
           id: 'jewelry_2',
           name: 'Vintage Ohrringe',
           price: 29.99,
           category: 'Schmuck',
+          description: 'Klassische Ohrringe im Vintage-Stil, perfekt für jeden Anlass.',
         ),
       ],
       'Kleidung': [
@@ -47,12 +50,14 @@ class _HomePageState extends State<HomePage> {
           name: 'Handgestrickter Pullover',
           price: 89.99,
           category: 'Kleidung',
+          description: 'Warm und gemütlich, handgestrickt aus 100% natürlicher Wolle.',
         ),
         Product(
           id: 'clothing_2',
           name: 'Gehäkelte Mütze',
           price: 24.99,
           category: 'Kleidung',
+          description: 'Stylische Mütze, handgehäkelt mit hochwertigem Garn.',
         ),
       ],
       'Wohnen': [
@@ -61,12 +66,14 @@ class _HomePageState extends State<HomePage> {
           name: 'Makramee Wandbehang',
           price: 59.99,
           category: 'Wohnen',
+          description: 'Handgeknüpfter Wandbehang aus natürlichen Materialien, einzigartiges Design.',
         ),
         Product(
           id: 'home_2',
           name: 'Handgetöpferte Vase',
           price: 39.99,
           category: 'Wohnen',
+          description: 'Einzigartige Vase aus Keramik, handgetöpfert und glasiert.',
         ),
       ],
       'Kunst': [
@@ -75,12 +82,14 @@ class _HomePageState extends State<HomePage> {
           name: 'Aquarell Gemälde',
           price: 149.99,
           category: 'Kunst',
+          description: 'Original Aquarell-Gemälde, handgemalt auf hochwertigem Papier.',
         ),
         Product(
           id: 'art_2',
           name: 'Handgedruckte Grafik',
           price: 79.99,
           category: 'Kunst',
+          description: 'Limitierte Auflage, handgedruckt mit traditionellen Techniken.',
         ),
       ],
       'Geschenke': [
@@ -89,12 +98,14 @@ class _HomePageState extends State<HomePage> {
           name: 'Personalisiertes Fotoalbum',
           price: 34.99,
           category: 'Geschenke',
+          description: 'Handgefertigtes Fotoalbum, personalisierbar mit Namen und Datum.',
         ),
         Product(
           id: 'gift_2',
           name: 'Handgemachte Seife Set',
           price: 19.99,
           category: 'Geschenke',
+          description: 'Set aus 3 handgemachten Seifen mit natürlichen Zutaten.',
         ),
       ],
       'Hochzeit': [
@@ -103,12 +114,14 @@ class _HomePageState extends State<HomePage> {
           name: 'Handgefertigte Einladungen',
           price: 3.99,
           category: 'Hochzeit',
+          description: 'Elegante Hochzeitseinladungen, handgefertigt mit Liebe zum Detail.',
         ),
         Product(
           id: 'wedding_2',
           name: 'Blumenkranz',
           price: 44.99,
           category: 'Hochzeit',
+          description: 'Traditioneller Blumenkranz, handgefertigt aus frischen Blumen.',
         ),
       ],
       'Spielzeug': [
@@ -117,12 +130,14 @@ class _HomePageState extends State<HomePage> {
           name: 'Gehäkeltes Kuscheltier',
           price: 29.99,
           category: 'Spielzeug',
+          description: 'Süßes Kuscheltier, handgehäkelt aus weicher Wolle.',
         ),
         Product(
           id: 'toy_2',
           name: 'Holzspielzeug Set',
           price: 39.99,
           category: 'Spielzeug',
+          description: 'Set aus handgefertigtem Holzspielzeug, sicher und langlebig.',
         ),
       ],
     };
@@ -472,110 +487,136 @@ class _HomePageState extends State<HomePage> {
       builder: (context, favoritesProvider, child) {
         final isFavorite = favoritesProvider.isFavorite(product);
         
-        return Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 4,
-                offset: const Offset(0, 2),
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductDetailPage(product: product),
               ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 3,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFD4C4B5),
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                  ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.image,
-                      size: 40,
-                      color: Colors.white,
+            );
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFD4C4B5),
+                      borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.image,
+                        size: 40,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        product.name,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '${product.price.toStringAsFixed(2)} €',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
+                Expanded(
+                  flex: 3,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              product.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.shopping_cart_outlined),
-                                onPressed: () {
-                                  Provider.of<CartProvider>(context, listen: false)
-                                      .addItem(product);
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('${product.name} wurde zum Warenkorb hinzugefügt'),
-                                      duration: const Duration(seconds: 2),
-                                      action: SnackBarAction(
-                                        label: 'Zum Warenkorb',
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(builder: (context) => const CartPage()),
-                                          );
-                                        },
+                            const SizedBox(height: 4),
+                            Text(
+                              product.description,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '${product.price.toStringAsFixed(2)} €',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.shopping_cart_outlined),
+                                  onPressed: () {
+                                    Provider.of<CartProvider>(context, listen: false)
+                                        .addItem(product);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text('${product.name} wurde zum Warenkorb hinzugefügt'),
+                                        duration: const Duration(seconds: 2),
+                                        action: SnackBarAction(
+                                          label: 'Zum Warenkorb',
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => const CartPage()),
+                                            );
+                                          },
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
-                              ),
-                              IconButton(
-                                icon: Icon(
-                                  isFavorite ? Icons.favorite : Icons.favorite_border,
-                                  color: isFavorite ? Colors.red : null,
-                                  size: 20,
+                                    );
+                                  },
                                 ),
-                                onPressed: () {
-                                  if (!isFavorite) {
-                                    _showAddToListDialog(context, product);
-                                  } else {
-                                    _showRemoveFromListsDialog(context, product);
-                                  }
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
+                                IconButton(
+                                  icon: Icon(
+                                    isFavorite ? Icons.favorite : Icons.favorite_border,
+                                    color: isFavorite ? Colors.red : null,
+                                    size: 20,
+                                  ),
+                                  onPressed: () {
+                                    if (!isFavorite) {
+                                      _showAddToListDialog(context, product);
+                                    } else {
+                                      _showRemoveFromListsDialog(context, product);
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

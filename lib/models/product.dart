@@ -4,12 +4,14 @@ class Product {
   final double price;
   final String imageUrl;
   final String category;
+  final String description;
 
   Product({
     required this.id,
     required this.name,
     required this.price,
     required this.category,
+    required this.description,
     this.imageUrl = '',
   });
 } 

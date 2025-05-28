@@ -366,9 +366,9 @@ class _HomePageState extends State<HomePage> {
                       GridView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 4,
-                          childAspectRatio: 0.8,
+                        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 250,
+                          childAspectRatio: 0.42,
                           mainAxisSpacing: 8,
                           crossAxisSpacing: 8,
                         ),
@@ -405,13 +405,15 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    GridView.count(
+                    GridView(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      crossAxisCount: 4,
-                      mainAxisSpacing: 8,
-                      crossAxisSpacing: 8,
-                      childAspectRatio: 1.5,
+                      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200,
+                        childAspectRatio: 0.7,
+                        mainAxisSpacing: 8,
+                        crossAxisSpacing: 8,
+                      ),
                       children: _sampleProducts.keys.take(4).map((category) {
                         return _buildFeaturedCategory(category, context);
                       }).toList(),
@@ -435,9 +437,9 @@ class _HomePageState extends State<HomePage> {
                     GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
-                        childAspectRatio: 0.8,
+                      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 250,
+                        childAspectRatio: 0.42,
                         mainAxisSpacing: 8,
                         crossAxisSpacing: 8,
                       ),
@@ -583,154 +585,158 @@ class _HomePageState extends State<HomePage> {
     final productName = isEnglish ? product.nameEn : product.name;
     final productDescription = isEnglish ? product.descriptionEn : product.description;
     
-    return Consumer<FavoritesProvider>(
-      builder: (context, favoritesProvider, child) {
-        final isFavorite = favoritesProvider.isFavorite(product);
-        
-        return GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ProductDetailPage(product: product),
-              ),
-            );
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 4,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 6,
-                  child: Container(
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFD4C4B5),
-                      borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                    ),
-                    child: product.imageUrl.isNotEmpty
-                        ? ClipRRect(
-                            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                            child: Image.network(
-                              product.imageUrl,
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                              height: double.infinity,
-                            ),
-                          )
-                        : const Center(
-                            child: Icon(
-                              Icons.image,
-                              size: 40,
-                              color: Colors.white,
-                            ),
-                          ),
+    return IntrinsicHeight(
+      child: Container(
+        constraints: const BoxConstraints(minHeight: 320),
+        child: Consumer<FavoritesProvider>(
+          builder: (context, favoritesProvider, child) {
+            final isFavorite = favoritesProvider.isFavorite(product);
+            
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProductDetailPage(product: product),
                   ),
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  flex: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              productName,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              productDescription,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey,
-                              ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 6,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFD4C4B5),
+                          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                         ),
-                        Row(
+                        child: product.imageUrl.isNotEmpty
+                            ? ClipRRect(
+                                borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                                child: Image.network(
+                                  product.imageUrl,
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                ),
+                              )
+                            : const Center(
+                                child: Icon(
+                                  Icons.image,
+                                  size: 40,
+                                  color: Colors.white,
+                                ),
+                              ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              '${product.price.toStringAsFixed(2)} €',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  productName,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  productDescription,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
                             ),
                             Row(
-                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                IconButton(
-                                  icon: const Icon(Icons.shopping_cart_outlined),
-                                  onPressed: () {
-                                    Provider.of<CartProvider>(context, listen: false)
-                                        .addItem(product);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text('$productName ${languageProvider.translate('added_to_cart')}'),
-                                        duration: const Duration(seconds: 2),
-                                        action: SnackBarAction(
-                                          label: languageProvider.translate('go_to_cart'),
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(builder: (context) => const CartPage()),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                                IconButton(
-                                  icon: Icon(
-                                    isFavorite ? Icons.favorite : Icons.favorite_border,
-                                    color: isFavorite ? Colors.red : null,
-                                    size: 20,
+                                Text(
+                                  '${product.price.toStringAsFixed(2)} €',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  onPressed: () {
-                                    if (!isFavorite) {
-                                      _showAddToListDialog(context, product);
-                                    } else {
-                                      _showRemoveFromListsDialog(context, product);
-                                    }
-                                  },
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.shopping_cart_outlined),
+                                      onPressed: () {
+                                        Provider.of<CartProvider>(context, listen: false)
+                                            .addItem(product);
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(
+                                            content: Text('$productName ${languageProvider.translate('added_to_cart')}'),
+                                            duration: const Duration(seconds: 2),
+                                            action: SnackBarAction(
+                                              label: languageProvider.translate('go_to_cart'),
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(builder: (context) => const CartPage()),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: Icon(
+                                        isFavorite ? Icons.favorite : Icons.favorite_border,
+                                        color: isFavorite ? Colors.red : null,
+                                        size: 20,
+                                      ),
+                                      onPressed: () {
+                                        if (!isFavorite) {
+                                          _showAddToListDialog(context, product);
+                                        } else {
+                                          _showRemoveFromListsDialog(context, product);
+                                        }
+                                      },
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
                           ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-        );
-      },
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 

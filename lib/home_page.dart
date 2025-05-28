@@ -9,6 +9,7 @@ import 'providers/language_provider.dart';
 import 'category_page.dart';
 import 'cart_page.dart';
 import 'product_detail_page.dart';
+import 'add_product_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -251,6 +252,15 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AddProductPage()),
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.language),
             onPressed: () {

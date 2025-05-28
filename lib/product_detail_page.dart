@@ -81,13 +81,20 @@ class ProductDetailPage extends StatelessWidget {
               height: 300,
               width: double.infinity,
               color: const Color(0xFFD4C4B5),
-              child: const Center(
-                child: Icon(
-                  Icons.image,
-                  size: 80,
-                  color: Colors.white,
-                ),
-              ),
+              child: product.imageUrl.isNotEmpty
+                  ? Image.network(
+                      product.imageUrl,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                    )
+                  : const Center(
+                      child: Icon(
+                        Icons.image,
+                        size: 80,
+                        color: Colors.white,
+                      ),
+                    ),
             ),
             Padding(
               padding: const EdgeInsets.all(16),

@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import '../models/product.dart';
 import '../models/favorite_list.dart';
-import 'language_provider.dart';
 
 class FavoritesProvider extends ChangeNotifier {
   final List<FavoriteList> _lists = [

@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
           category: 'Schmuck',
           description: 'Elegante Halskette aus hochwertigen Materialien, handgefertigt mit Liebe zum Detail.',
           descriptionEn: 'Elegant necklace made from high-quality materials, handcrafted with attention to detail.',
+          imageUrl: 'https://media.istockphoto.com/id/623358196/de/foto/handgemachte-schmuck-halsketten-hängen.jpg?s=612x612&w=0&k=20&c=VjGRcaE4QKnF9cb97f8bMECQP7BUYyAwXXq2KgKD1zo=',
         ),
         Product(
           id: 'jewelry_2',
@@ -47,6 +48,7 @@ class _HomePageState extends State<HomePage> {
           category: 'Schmuck',
           description: 'Klassische Ohrringe im Vintage-Stil, perfekt für jeden Anlass.',
           descriptionEn: 'Classic vintage-style earrings, perfect for any occasion.',
+          imageUrl: 'https://www.kanstingers.com/cdn/shop/files/rn-image_picker_lib_temp_c1d91dce-8f4a-4cd8-a15b-9220e430a73a.jpg?v=1735214989&width=1946',
         ),
       ],
       'Kleidung': [
@@ -58,6 +60,7 @@ class _HomePageState extends State<HomePage> {
           category: 'Kleidung',
           description: 'Warm und gemütlich, handgestrickt aus 100% natürlicher Wolle.',
           descriptionEn: 'Warm and cozy, hand-knitted from 100% natural wool.',
+          imageUrl: 'https://media.istockphoto.com/id/1265040832/de/foto/stapel-von-pullovern-auf-einem-holztisch.jpg?s=612x612&w=0&k=20&c=RUcXJSf4mtOb0WqI2FDdlT0E4BtWrf4AiWH43h1U48k=',
         ),
         Product(
           id: 'clothing_2',
@@ -67,6 +70,7 @@ class _HomePageState extends State<HomePage> {
           category: 'Kleidung',
           description: 'Stylische Mütze, handgehäkelt mit hochwertigem Garn.',
           descriptionEn: 'Stylish hat, hand-crocheted with high-quality yarn.',
+          imageUrl: 'https://i.ytimg.com/vi/3GewhHIBBDo/maxresdefault.jpg',
         ),
       ],
       'Wohnen': [
@@ -78,6 +82,7 @@ class _HomePageState extends State<HomePage> {
           category: 'Wohnen',
           description: 'Handgeknüpfter Wandbehang aus natürlichen Materialien, einzigartiges Design.',
           descriptionEn: 'Hand-knotted wall hanging made from natural materials, unique design.',
+          imageUrl: 'https://brightstarsdesign.de/cdn/shop/products/brightstars-makramee-boho-makramee-wandbehang-leila-41580988629256.jpg?v=1673958778',
         ),
         Product(
           id: 'home_2',
@@ -87,6 +92,7 @@ class _HomePageState extends State<HomePage> {
           category: 'Wohnen',
           description: 'Einzigartige Vase aus Keramik, handgetöpfert und glasiert.',
           descriptionEn: 'Unique ceramic vase, handmade and glazed.',
+          imageUrl: 'https://cdn.kasuwa.de/img/productpics/90/9/866b425d671cb40b206e02673b199b92-1-full.jpg?ec9ac45dbd74a25c08224dd0e84f5fb2',
         ),
       ],
       'Kunst': [
@@ -98,6 +104,7 @@ class _HomePageState extends State<HomePage> {
           category: 'Kunst',
           description: 'Original Aquarell-Gemälde, handgemalt auf hochwertigem Papier.',
           descriptionEn: 'Original watercolor painting, hand-painted on high-quality paper.',
+          imageUrl: 'https://st2.depositphotos.com/1072187/47075/i/1600/depositphotos_470756984-stock-illustration-watercolor-painting-summer-sunset-landscape.jpg',
         ),
         Product(
           id: 'art_2',
@@ -107,6 +114,7 @@ class _HomePageState extends State<HomePage> {
           category: 'Kunst',
           description: 'Limitierte Auflage, handgedruckt mit traditionellen Techniken.',
           descriptionEn: 'Limited edition, hand-printed with traditional techniques.',
+          imageUrl: 'https://images.squarespace-cdn.com/content/v1/592d93882994caabc9aff31a/1685044532145-95N8P0W64MGHV4HK6J18/FFE6535A-9639-4AD5-B5F5-594C1E452526.jpg?format=1500w',
         ),
       ],
       'Geschenke': [
@@ -118,6 +126,7 @@ class _HomePageState extends State<HomePage> {
           category: 'Geschenke',
           description: 'Handgefertigtes Fotoalbum, personalisierbar mit Namen und Datum.',
           descriptionEn: 'Handmade photo album, customizable with name and date.',
+          imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRi-7mVvjQJismKXmF7rN9KHZbFI_XiDeDmA&s',
         ),
         Product(
           id: 'gift_2',
@@ -127,6 +136,7 @@ class _HomePageState extends State<HomePage> {
           category: 'Geschenke',
           description: 'Set aus 3 handgemachten Seifen mit natürlichen Zutaten.',
           descriptionEn: 'Set of 3 handmade soaps with natural ingredients.',
+          imageUrl: 'https://anneschd.shop/cdn/shop/products/seifenmagie-bierseife-spiralkerzen-211125-bearbeitet-37_4baf44e8-6e19-498d-8dd1-c152b01fd392.jpg?v=1648459122&width=1946',
         ),
       ],
       'Hochzeit': [
@@ -138,6 +148,7 @@ class _HomePageState extends State<HomePage> {
           category: 'Hochzeit',
           description: 'Elegante Hochzeitseinladungen, handgefertigt mit Liebe zum Detail.',
           descriptionEn: 'Elegant wedding invitations, handmade with attention to detail.',
+          imageUrl: 'https://static1.squarespace.com/static/54a6cb5be4b0243cdd4c7835/54a6d31ae4b0c309d0187829/54d3ec9de4b0ce880a3cc9df/1448311867534/?format=1500w',
         ),
         Product(
           id: 'wedding_2',
@@ -147,6 +158,7 @@ class _HomePageState extends State<HomePage> {
           category: 'Hochzeit',
           description: 'Traditioneller Blumenkranz, handgefertigt aus frischen Blumen.',
           descriptionEn: 'Traditional flower crown, handmade from fresh flowers.',
+          imageUrl: 'https://st3.depositphotos.com/1177973/13481/i/450/depositphotos_134813256-stock-photo-fresh-floral-wreath.jpg',
         ),
       ],
       'Spielzeug': [
@@ -158,6 +170,7 @@ class _HomePageState extends State<HomePage> {
           category: 'Spielzeug',
           description: 'Süßes Kuscheltier, handgehäkelt aus weicher Wolle.',
           descriptionEn: 'Cute plush toy, hand-crocheted from soft wool.',
+          imageUrl: 'https://i.ebayimg.com/images/g/EgQAAOSwnVNlgX92/s-l1200.jpg',
         ),
         Product(
           id: 'toy_2',
@@ -167,6 +180,7 @@ class _HomePageState extends State<HomePage> {
           category: 'Spielzeug',
           description: 'Set aus handgefertigtem Holzspielzeug, sicher und langlebig.',
           descriptionEn: 'Set of handmade wooden toys, safe and durable.',
+          imageUrl: 'https://cdn.kasuwa.de/img/productpics/93/52/5beda0fba41008cf62d16328370e25e6-2-full.jpg?fdba8aa8f7c907d8c1eb26a4b4ca1dac',
         ),
       ],
     };
@@ -343,10 +357,10 @@ class _HomePageState extends State<HomePage> {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.7,
-                          mainAxisSpacing: 16,
-                          crossAxisSpacing: 16,
+                          crossAxisCount: 4,
+                          childAspectRatio: 0.8,
+                          mainAxisSpacing: 8,
+                          crossAxisSpacing: 8,
                         ),
                         itemCount: _searchResults.length,
                         itemBuilder: (context, index) {
@@ -384,9 +398,9 @@ class _HomePageState extends State<HomePage> {
                     GridView.count(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 16,
-                      crossAxisSpacing: 16,
+                      crossAxisCount: 4,
+                      mainAxisSpacing: 8,
+                      crossAxisSpacing: 8,
                       childAspectRatio: 1.5,
                       children: _sampleProducts.keys.take(4).map((category) {
                         return _buildFeaturedCategory(category, context);
@@ -412,10 +426,10 @@ class _HomePageState extends State<HomePage> {
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.7,
-                        mainAxisSpacing: 16,
-                        crossAxisSpacing: 16,
+                        crossAxisCount: 4,
+                        childAspectRatio: 0.8,
+                        mainAxisSpacing: 8,
+                        crossAxisSpacing: 8,
                       ),
                       itemCount: _allProducts.length,
                       itemBuilder: (context, index) {
@@ -459,6 +473,18 @@ class _HomePageState extends State<HomePage> {
   Widget _buildFeaturedCategory(String title, BuildContext context) {
     final languageProvider = Provider.of<LanguageProvider>(context, listen: false);
     final categoryKey = title.toLowerCase().replaceAll(' ', '_');
+    
+    // Kategorie-spezifische Bilder
+    final Map<String, String> categoryImages = {
+      'Schmuck': 'https://media.istockphoto.com/id/623358196/de/foto/handgemachte-schmuck-halsketten-hängen.jpg?s=612x612&w=0&k=20&c=VjGRcaE4QKnF9cb97f8bMECQP7BUYyAwXXq2KgKD1zo=',
+      'Kleidung': 'https://media.istockphoto.com/id/1265040832/de/foto/stapel-von-pullovern-auf-einem-holztisch.jpg?s=612x612&w=0&k=20&c=RUcXJSf4mtOb0WqI2FDdlT0E4BtWrf4AiWH43h1U48k=',
+      'Wohnen': 'https://brightstarsdesign.de/cdn/shop/products/brightstars-makramee-boho-makramee-wandbehang-leila-41580988629256.jpg?v=1673958778',
+      'Kunst': 'https://st2.depositphotos.com/1072187/47075/i/1600/depositphotos_470756984-stock-illustration-watercolor-painting-summer-sunset-landscape.jpg',
+      'Geschenke': 'https://anneschd.shop/cdn/shop/products/seifenmagie-bierseife-spiralkerzen-211125-bearbeitet-37_4baf44e8-6e19-498d-8dd1-c152b01fd392.jpg?v=1648459122&width=1946',
+      'Hochzeit': 'https://static1.squarespace.com/static/54a6cb5be4b0243cdd4c7835/54a6d31ae4b0c309d0187829/54d3ec9de4b0ce880a3cc9df/1448311867534/?format=1500w',
+      'Spielzeug': 'https://cdn.kasuwa.de/img/productpics/93/52/5beda0fba41008cf62d16328370e25e6-2-full.jpg?fdba8aa8f7c907d8c1eb26a4b4ca1dac',
+    };
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -488,16 +514,25 @@ class _HomePageState extends State<HomePage> {
           child: Stack(
             children: [
               Container(
-                color: const Color(0xFFD4C4B5),
                 height: double.infinity,
                 width: double.infinity,
-                child: const Center(
-                  child: Icon(
-                    Icons.image,
-                    size: 40,
-                    color: Colors.white,
-                  ),
-                ),
+                child: categoryImages.containsKey(title)
+                    ? Image.network(
+                        categoryImages[title]!,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: double.infinity,
+                      )
+                    : Container(
+                        color: const Color(0xFFD4C4B5),
+                        child: const Center(
+                          child: Icon(
+                            Icons.image,
+                            size: 40,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
               ),
               Positioned(
                 bottom: 0,
@@ -505,7 +540,16 @@ class _HomePageState extends State<HomePage> {
                 right: 0,
                 child: Container(
                   padding: const EdgeInsets.all(8),
-                  color: Colors.black54,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [
+                        Colors.black.withOpacity(0.8),
+                        Colors.transparent,
+                      ],
+                    ),
+                  ),
                   child: Text(
                     languageProvider.translate(categoryKey),
                     style: const TextStyle(
@@ -558,23 +602,34 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  flex: 3,
+                  flex: 6,
                   child: Container(
+                    height: 100,
                     decoration: BoxDecoration(
                       color: const Color(0xFFD4C4B5),
                       borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                     ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.image,
-                        size: 40,
-                        color: Colors.white,
-                      ),
-                    ),
+                    child: product.imageUrl.isNotEmpty
+                        ? ClipRRect(
+                            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                            child: Image.network(
+                              product.imageUrl,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                            ),
+                          )
+                        : const Center(
+                            child: Icon(
+                              Icons.image,
+                              size: 40,
+                              color: Colors.white,
+                            ),
+                          ),
                   ),
                 ),
                 Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -624,7 +679,7 @@ class _HomePageState extends State<HomePage> {
                                         .addItem(product);
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
-                                        content: Text('${productName} ${languageProvider.translate('added_to_cart')}'),
+                                        content: Text('$productName ${languageProvider.translate('added_to_cart')}'),
                                         duration: const Duration(seconds: 2),
                                         action: SnackBarAction(
                                           label: languageProvider.translate('go_to_cart'),

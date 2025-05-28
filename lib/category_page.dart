@@ -82,10 +82,10 @@ class CategoryPage extends StatelessWidget {
       body: GridView.builder(
         padding: const EdgeInsets.all(16),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 0.7,
-          mainAxisSpacing: 16,
-          crossAxisSpacing: 16,
+          crossAxisCount: 4,
+          childAspectRatio: 0.8,
+          mainAxisSpacing: 8,
+          crossAxisSpacing: 8,
         ),
         itemCount: products.length,
         itemBuilder: (context, index) {
@@ -128,23 +128,34 @@ class CategoryPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  flex: 3,
+                  flex: 8,
                   child: Container(
+                    height: 100,
                     decoration: BoxDecoration(
                       color: const Color(0xFFD4C4B5),
                       borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                     ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.image,
-                        size: 40,
-                        color: Colors.white,
-                      ),
-                    ),
+                    child: product.imageUrl.isNotEmpty
+                        ? ClipRRect(
+                            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                            child: Image.network(
+                              product.imageUrl,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                            ),
+                          )
+                        : const Center(
+                            child: Icon(
+                              Icons.image,
+                              size: 40,
+                              color: Colors.white,
+                            ),
+                          ),
                   ),
                 ),
                 Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(

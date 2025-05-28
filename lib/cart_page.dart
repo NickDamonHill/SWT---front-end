@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'models/product.dart';
 import 'models/cart_item.dart';
 import 'providers/cart_provider.dart';
 import 'providers/language_provider.dart';
@@ -193,13 +192,23 @@ class CartPage extends StatelessWidget {
               color: const Color(0xFFD4C4B5),
               borderRadius: const BorderRadius.horizontal(left: Radius.circular(12)),
             ),
-            child: const Center(
-              child: Icon(
-                Icons.image,
-                size: 40,
-                color: Colors.white,
-              ),
-            ),
+            child: item.product.imageUrl.isNotEmpty
+                ? ClipRRect(
+                    borderRadius: const BorderRadius.horizontal(left: Radius.circular(12)),
+                    child: Image.network(
+                      item.product.imageUrl,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                    ),
+                  )
+                : const Center(
+                    child: Icon(
+                      Icons.image,
+                      size: 40,
+                      color: Colors.white,
+                    ),
+                  ),
           ),
           Expanded(
             child: Padding(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
-import '../lib/main.dart';
-import '../lib/providers/favorites_provider.dart';
-import '../lib/home_page.dart';
+import 'package:swt_front_end/main.dart';
+import 'package:swt_front_end/providers/favorites_provider.dart';
+import 'package:swt_front_end/home_page.dart';
 
 void main() {
   testWidgets('App initialization test', (WidgetTester tester) async {

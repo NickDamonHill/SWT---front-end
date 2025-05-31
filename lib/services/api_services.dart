@@ -85,8 +85,12 @@ Future<List<Product>> getProductsForHomePage() async {
   );
   print(resp.body);
   if (resp.statusCode == 200) {
+    List<Product> productList = [];
     final List<dynamic> data = jsonDecode(resp.body);
-    return data.map((e) => Product.fromJson(e)).toList();
+    for (var e in data) {
+      productList.add(Product.fromJson(e));
+    }
+    return productList;
   } else {
     throw Exception('Failed to load products for home page');
   }
@@ -104,10 +108,15 @@ Future<List<Product>> getProductsByCategory(int categoryId) async {
     Uri.parse(host),
     headers: {"Accept": "application/json"},
   );
-  print(resp.body);
+  
   if (resp.statusCode == 200) {
+    List<Product> productList = [];
     final List<dynamic> data = jsonDecode(resp.body);
-    return data.map((e) => Product.fromJson(e)).toList();
+    for (var e in data) {
+      productList.add(Product.fromJson(e));
+    }
+    
+    return productList;
   } else {
     throw Exception('Failed to load products for home page');
   }

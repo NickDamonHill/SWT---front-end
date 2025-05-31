@@ -19,7 +19,7 @@ class Product {
     return Product(
       id: json['id'],
       name: json['name'],
-      price: json['price'].toDouble(),
+      price: json['price'] is String ? double.parse(json['price']) : json['price'].toDouble(),
       categoryId: json['category_id'],
       sellerId: json['seller_id'],
       amount: json['amount'],

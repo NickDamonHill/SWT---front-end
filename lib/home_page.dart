@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
     _sampleProducts = {
       'Schmuck': [
         Product(
-          id: 'jewelry_1',
+          id: 1,
           name: 'Handgefertigte Halskette',
           price: 49.99,
           category: 'Schmuck',

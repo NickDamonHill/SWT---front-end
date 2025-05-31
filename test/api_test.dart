@@ -40,13 +40,16 @@ void main() {
       expect(products, isA<List<Product>>());
     });
 
+    test('Get Products By User Test', () async {
+      final products = await getProductsByUser(1);
+      print(products);
+      expect(products, isA<List<Product>>());
+    });
+
     test('Add Product Test', () async {
       final addResult = await addProduct(1, "Test Product", 100, 1, 50);
       expect(addResult, true);
-
     });
-
-
 
     test('Favorites Flow Test', () async {
       // Önce giriş yap

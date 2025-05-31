@@ -126,6 +126,31 @@ Future<List<Product>> getProductsByCategory(int categoryId) async {
   }
 }
 
+Future<List<Product>> getProductsByUser (int userId) async {
+  final host = "$hostAddress/products/$userId";
+  try {
+    var resp = await client.get(
+    Uri.parse(host),
+    headers: {"Accept": "application/json"},
+  );
+  
+  if (resp.statusCode == 200) {
+    List<Product> productList = [];
+    final List<dynamic> data = jsonDecode(resp.body);
+    for (var e in data) {
+      productList.add(Product.fromJson(e));
+    }
+    
+    return productList;
+  } else {
+    throw Exception('Failed to load products for home page');
+  }
+  } catch (e) {
+    print('Error getting products for home page: $e');
+    return [];
+  }
+}
+
 // Add product
 Future<bool> addProduct(int userId, String name, double price, int categoryId, int amount) async {
   final host = "$hostAddress/addProduct";

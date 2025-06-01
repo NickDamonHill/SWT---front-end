@@ -46,12 +46,6 @@ Future<User?> checkUser(String email, String password) async {
 Future<bool> registerUser(String firstname, String lastname, String email,
     String password) async {
   final host = "$hostAddress/register";
-  print(jsonEncode({
-    "first_name": firstname,
-    "last_name": lastname,
-    "email": email,
-    "password": password,
-  }));
   try {
     var resp = await client.post(
       Uri.parse(host),
@@ -343,7 +337,7 @@ Future<bool> markNotificationAsRead(int notificationId) async {
 
 // Get orders
 Future<List<Order>> getOrders(int userId) async {
-  final host = "$hostAddress/orders";
+  final host = "$hostAddress/orders/$userId";
   try {
     var resp = await client.get(
       Uri.parse(host),
@@ -351,8 +345,12 @@ Future<List<Order>> getOrders(int userId) async {
     );
     print(resp.body);
     if (resp.statusCode == 200) {
+      List<Order> orderList = [];
       final List<dynamic> data = jsonDecode(resp.body);
-      return data.map((e) => Order.fromJson(e)).toList();
+      for (var e in data) {
+        orderList.add(Order.fromJson(e));
+      }
+      return orderList;
     } else {
       throw Exception('Failed to load orders');
     }

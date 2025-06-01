@@ -12,20 +12,20 @@ void main() {
     String testEmail = "esad@example.com";
     String testPassword = "securepassword123";
 
-    // test('Register and Login Test', () async {
-    //   // Önce kayıt ol
-    //   final registerResult = await registerUser(
-    //     "Test",
-    //     "User",
-    //     testEmail,
-    //     testPassword
-    //   );
-    //   expect(registerResult, true);
+    test('Register and Login Test', () async {
+      // Önce kayıt ol
+      final registerResult = await registerUser(
+        "Test",
+        "User",
+        testEmail,
+        testPassword
+      );
+      expect(registerResult, false);
 
-    //   // Sonra giriş yap
-    //   final user = await checkUser(testEmail, testPassword);
-    //   expect(user, isNotNull);
-    // });
+      // Sonra giriş yap
+      final user = await checkUser(testEmail, testPassword);
+      expect(user, isA<User>());
+    });
 
     test('Get Products For Home Page Test', () async {
       final products = await getProductsForHomePage();

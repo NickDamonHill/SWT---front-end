@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Review {
   final int id;
   final int productId;
@@ -16,13 +18,18 @@ class Review {
   });
 
   factory Review.fromJson(Map<String, dynamic> json) {
+    // RFC 2822 formatındaki tarihi işle
+    final dateStr = json['review_date'] as String;
+    final dateFormat = DateFormat('EEE, dd MMM yyyy HH:mm:ss z');
+    final date = dateFormat.parse(dateStr);
+    
     return Review(
       id: json['id'],
       productId: json['product_id'],
       userId: json['user_id'],
       rating: json['rating'],
       comment: json['comment'],
-      reviewDate: DateTime.parse(json['review_date']),
+      reviewDate: date,
     );
   }
 

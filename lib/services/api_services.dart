@@ -5,7 +5,7 @@ import '../models/product.dart';
 import '../models/review.dart';
 import '../models/notification.dart';
 import '../models/order.dart';
-
+import '../models/favorite.dart';
 var client = http.Client();
 
 const hostAddress = "https://stc-backend-bb4a69ac964c.herokuapp.com";
@@ -187,9 +187,9 @@ Future<bool> removeProduct(int userId, int productId) async {
 Future<List<Review>> getProductReviews(int productId) async {
   final host = "$hostAddress/reviews/$productId";
   try {
-    var resp = await client.post(
+    var resp = await client.get(
       Uri.parse(host),
-      headers: {"Content-Type": "application/json"},
+      headers: {"Accept": "application/json"},
     );
     print(resp.body);
     if (resp.statusCode == 200) {
@@ -241,7 +241,7 @@ Future<bool> removeReview(int reviewId) async {
 
 // Get favorites
 Future<List<Product>> getFavorites(int userId) async {
-  final host = "$hostAddress/favorites";
+  final host = "$hostAddress/favorites/$userId";
   try {
     var resp = await client.get(
       Uri.parse(host),
@@ -249,8 +249,12 @@ Future<List<Product>> getFavorites(int userId) async {
     );
     print(resp.body);
     if (resp.statusCode == 200) {
+      List<Favorite> favoriteList = [];
       final List<dynamic> data = jsonDecode(resp.body);
-      return data.map((e) => Product.fromJson(e)).toList();
+      for (var e in data) {
+        favoriteList.add(Favorite.fromJson(e));
+      }
+      return favoriteList;
     } else {
       throw Exception('Failed to load favorites');
     }
@@ -308,8 +312,12 @@ Future<List<Notification>> getNotifications(int userId) async {
     );
     print(resp.body);
     if (resp.statusCode == 200) {
+      List<Notification> notificationList = []; 
       final List<dynamic> data = jsonDecode(resp.body);
-      return data.map((e) => Notification.fromJson(e)).toList();
+      for (var e in data) {
+        notificationList.add(Notification.fromJson(e));
+      }
+      return notificationList;
     } else {
       throw Exception('Failed to load notifications');
     }

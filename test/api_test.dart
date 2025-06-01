@@ -51,13 +51,28 @@ void main() {
       expect(addResult, true);
     });
 
+    test('Get Product Reviews Test', () async {
+      final reviews = await getProductReviews(2);
+      expect(reviews, isA<List<Review>>());
+    });
+
+    test('Add and Remove Review Test', () async {
+      final addResult = await addReview(2, 2, 5, "Test Review");
+      expect(addResult, true);
+
+      final removeResult = await removeReview(2);
+      expect(removeResult, true);
+    });
+
+    
+
     test('Favorites Flow Test', () async {
       // Önce giriş yap
       final user = await checkUser(testEmail, testPassword);
       expect(user, isA<User>());
 
       // Favorilere ekle
-      final addResult = await addToFavorites(user!.id, 1);
+      final addResult = await addToFavorites(user!.id, 2);
       expect(addResult, true);
 
       // Favorileri getir
@@ -65,7 +80,7 @@ void main() {
       expect(favorites, isA<List<Product>>());
 
       // Favorilerden çıkar
-      final removeResult = await removeFromFavorites(user.id, 1);
+      final removeResult = await removeFromFavorites(user.id, 2);
       expect(removeResult, true);
     });
 
@@ -77,6 +92,11 @@ void main() {
       // Bildirimleri getir
       final notifications = await getNotifications(user!.id);
       expect(notifications, isA<List<Notification>>());
+    });
+
+    test('Mark Notification As Read Test', () async {
+      final markResult = await markNotificationAsRead(1);
+      expect(markResult, true);
     });
 
     test('Get Orders Test', () async {
@@ -95,7 +115,7 @@ void main() {
       expect(user, isA<User>());
 
       // Sipariş ekle
-      final addResult = await addToOrders(user!.id, 1, 1, "Test Address");
+      final addResult = await addToOrders(user!.id, 4, 3, "Test Address");
       expect(addResult, true);
     });
 
@@ -108,6 +128,10 @@ void main() {
       final purchaseResult = await purchaseOrder(1);
       expect(purchaseResult, true);
     });
-    
+
+    test('Cancel Order Test', () async {
+      final cancelResult = await cancelOrder(2);
+      expect(cancelResult, true);
+    });
   });
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/favorites_provider.dart';
-import 'models/favorite_list.dart';
+import 'models/favorite.dart';
 import 'models/product.dart';
 
 class FavoritesPage extends StatelessWidget {

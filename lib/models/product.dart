@@ -1,6 +1,7 @@
 class Product {
   final int id;
   final String name;
+  final String nameEn;
   final double price;
   final int categoryId;
   final int sellerId;
@@ -9,10 +10,12 @@ class Product {
   Product({
     required this.id,
     required this.name,
+    required this.nameEn,
     required this.price,
     required this.categoryId,
     required this.sellerId,
     required this.amount,
+
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {

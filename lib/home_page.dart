@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
     _sampleProducts = {
       'Schmuck': [
         Product(
-          id: 'jewelry_1',
+          id: 1,
           name: 'Handgefertigte Halskette',
           nameEn: 'Handmade Necklace',
           price: 49.99,
